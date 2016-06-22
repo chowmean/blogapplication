@@ -1,0 +1,111 @@
+<link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+<link rel="stylesheet" href="css/cards.css">
+<script src="js/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="js/apiCalls.js"></script>
+
+<script   src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js">  </script>
+
+<script>
+    $(function(){
+        $("#includedContent").load("navbar.html");
+    });
+
+
+
+    callApi('blogs/22','get','',function (data) {
+        document.getElementById('title').innerHTML=data.blog_title;
+        document.getElementById('category').innerHTML=data.category_name;
+        document.getElementById('blogBody').innerHTML=data.blog_body;
+    });
+
+
+    $(function(){
+        $("#includedContent").load("navbar.html");
+    });
+
+
+
+</script>
+
+
+
+
+
+
+<div id="includedContent"></div>
+
+<div id="blog" class="col-md-offset-2 col-md-9 blog">
+
+<img src="img/1.jpg" class="blogImg"/>
+<div class="title" id="title">Title</div>
+<div class="category" id="category">category</div>
+<div class="blogBody" id="blogBody">blog body</div>
+<a class="btn btn-primary pull-right">Publish</a>
+<a class="btn btn-danger">Reject</a>
+
+</div>
+
+
+<style>
+    h2 {
+        text-align: center;
+        margin: 30px 0;
+    }
+
+    h4.title {
+        text-align: center;
+    }
+
+    .title
+    {
+        text-align: center;
+        font-size:30px;
+        color:teal;
+
+
+    }
+
+    .category
+    {
+        text-align: center;
+        font-size:15px;
+        color:lightslategray;
+
+    }
+
+
+    .blogBody
+    {
+        background:#f8f8f8;
+        text-align: left;
+        margin:40px;
+        padding:40px;
+        font-size:17px;
+        color:lightslategray;
+        border-radius:3px;
+
+    }
+
+    .blogImg
+    {
+        width:100%;
+        height:40%;
+        object-fit: cover;
+     }
+
+
+    .blog
+    {
+        background:#efefef;
+        padding:10px;
+        border-radius:3px;
+    }
+</style>

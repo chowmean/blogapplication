@@ -7,7 +7,7 @@
  */
 
 
-var baseUrl='http://192.168.9.70:8085/api/';
+var baseUrl='http://192.168.9.129:8085/api/';
 
 
 $( "#submitBlog" ).click(function() {
@@ -18,6 +18,10 @@ $( "#submitBlog" ).click(function() {
 
 function callApi(url,method, data,callback)
 {
+    if(data=='')
+    {
+        data={"data":"empty"};
+    }
     $.when($.ajax({
         url:baseUrl+url,
         headers: {
@@ -90,4 +94,23 @@ function saveBlog(event)
             console.log('Error! Blog not created');
         }
     });
+}
+
+
+
+function deleteUser(userId,operation)
+{
+    if(operation == 1)
+    {
+        callApi('accounts/deactivate/?user_id='+userId,'delete','',function (result) {
+            console.log(result);
+        });
+    }
+    else if(operation == 0)
+    {
+        callApi('accounts/activate/?user_id='+userId,'post','',function (result) {
+            console.log(result);
+        });
+    }
+
 }

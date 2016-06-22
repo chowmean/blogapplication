@@ -30,14 +30,15 @@
             <th data-field="username" data-sortable="true">Username</th>
             <th data-field="created_on" data-sortable="true" >Creation Date</th>
             <th data-field="active" data-sortable="true">Active</th>
+            <th data-field="active" data-sortable="true">Operation</th>
 
         </tr></thead>
     </table>
 
+
+
+    </body>
     <script>
-
-
-
         callApi('accounts/users','get','',function (data) {
             console.log(data);
             var trHTML = '';
@@ -45,8 +46,13 @@
             $.each(data, function (i, item) {
 
                 trHTML += '<tr><td>' + data[i].user_id + '</td><td>' + data[i].email + '</td><td>' + data[i].username + '</td><td>' + data[i].time_of_registration + '</td>' +
-                        '</td><td>' + data[i].active + '</td></tr>';
+                        '</td><td>' + data[i].active +
+                        '</td><td><a class="btn btn-primary"';
 
+                if(data[i].active==0){
+                        trHTML +='onclick="deleteUser('+data[i].user_id+','+data[i].active+')">Activate User</a></td></tr>';}
+                else {
+                        trHTML +='onclick="deleteUser('+data[i].user_id+','+data[i].active+')">Restrict User</a></td></tr>';}
             });
             trHTML+='</tbody>';
             $('#location').append(trHTML);
@@ -57,14 +63,9 @@
             $("#includedContent").load("navbar.html");
         });
 
-
-
-
     </script>
 
 
-    </body>
-    </html>
 
 </div>
 
