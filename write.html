@@ -14,10 +14,18 @@
 
 <script>
 
+    var userRole=window.localStorage.getItem('role');
     $(function(){
-        $("#includedContent").load("navbar_write.html");
+        if(userRole=='admin')
+        {
+            window.location.href='index.html';
+            $("#includedContent").load("navbar.html");
+        }
+        else if(userRole=="user")
+        {
+            $("#includedContent").load("navbar_write.html");
+        }
     });
-
 
 
 </script>

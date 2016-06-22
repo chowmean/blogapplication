@@ -11,28 +11,33 @@
 <script src="js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script src="js/apiCalls.js"></script>
 
-<script   src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js">  </script>
-
 <script>
+    var userRole=window.localStorage.getItem('role');
+
     $(function(){
-        $("#includedContent").load("navbar.html");
+        if(userRole=='admin')
+        {
+            $("#includedContent").load("navbar.html");
+        }
+        else if(userRole=="user")
+        {
+            $("#includedContent").load("navbar_write.html");
+        }
     });
 
 
 
-    function getQueryStringValue (key) {
-        return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
-    }
+
 
     function publish(a)
     {
         callApi('/blogs/publish/'+a,'post','',function(result,textStatus,jqXHR){
             if (textStatus=='success')
             {
-                console.log(result);
+                showToast('Blog Published Successfully');
             }
             else {
-                console.log('error!')
+                showToast('Error Publishing the blog');
             }
         })
     }
@@ -42,10 +47,10 @@
         callApi('/blogs/depublish/'+a,'post','',function(result,textStatus,jqXHR){
             if (textStatus=='success')
             {
-                console.log(result);
+                showToast('Blog Rejected');
             }
             else {
-                console.log('error!')
+                showToast('Error Rejecting Blog');
             }
         })
     }
@@ -57,14 +62,19 @@
         document.getElementById('blogBody').innerHTML=data.blog_body;
         document.getElementById('blogBody').innerHTML=data.blog_body;
         document.getElementById('imgSrc').innerHTML='<img src="'+ staticUrl+data.image_path +'" class="blogImg"/>';
-        $('#publish').attr('onclick', 'publish('+data.blog_id+')');
-        $('#reject').attr('onclick', 'reject('+data.blog_id+')');
+
+        if(userRole=='admin') {
+            $('#publish').attr('onclick', 'publish(' + data.blog_id + ')');
+            $('#reject').attr('onclick', 'reject(' + data.blog_id + ')');
+        }
+        else {
+            $('#publish').addClass('hidden');
+            $('#reject').addClass('hidden');
+
+        }
     });
 
 
-    $(function(){
-        $("#includedContent").load("navbar.html");
-    });
 
 
 

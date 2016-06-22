@@ -10,14 +10,22 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script src="js/apiCalls.js"></script>
-
 <script   src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js">  </script>
 
 <script>
-
+    var userRole=window.localStorage.getItem('role');
 
     $(function(){
-        $("#includedContent").load("navbar.html");
+        if(userRole=='admin')
+        {
+            $("#includedContent").load("navbar.html");
+        }
+        else if(userRole=="user")
+        {
+            $("#includedContent").load("navbar_write.html");
+        }
+
+
     });
 
     callApi('blogs','get','',function (result) {
@@ -25,29 +33,41 @@
         var toADDTo=document.getElementById('blogsRow');
         $.each(result, function (i, item) {
             var t=document.createElement('div');
-            data= '<img src="'+staticUrl+result[i].image_path+'" width="100%"/>' +
+            data= '<img src="'+staticUrl+result[i].image_path+'" width="100%" height="20%;"/>' +
                     '<font size="4">'+result[i].blog_title+'</font><br>' +result[i].category_name + '<br>'+
-                    result[i].blog_body+'<br>' +
-                    result[i].username+'<br>'+
-                    '<a class="bttn pull-right" onclick="review('+result[i].blog_id+')">Review</a>';
+                    result[i].blog_body.substring(0,20)+'...'+'<br>' +
+                    result[i].username+'<br>';
+            if(userRole=='admin') {
+                data += '<a class="bttn pull-right" onclick="review(' + result[i].blog_id + ')">Review</a>';
+            }
+            else if (userRole=='user'){
+                data += '<a class="bttn pull-right" onclick="review(' + result[i].blog_id + ')">View</a>';
+            }
+
             t.classList=['col-md-3 mCard'];
             t.innerHTML=data;
             toADDTo.appendChild(t);
          });
     });
+
+
+
+
+
+
 </script>
 
-
-
-
-
 <div id="includedContent"></div>
-
+<button onclick="showToast()">ckick</button>
 <div id="blogs" class="col-md-offset-3 col-md-9">
     <div class="row" id="blogsRow">
 
     </div>
 </div>
+
+
+
+
 
 
 <style>h2 {

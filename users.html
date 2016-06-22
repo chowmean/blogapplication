@@ -39,6 +39,25 @@
 
     </body>
     <script>
+
+        var userRole=window.localStorage.getItem('role');
+
+
+
+        $(function(){
+            if(userRole=='admin')
+            {
+                $("#includedContent").load("navbar.html");
+            }
+            else if(userRole=="user")
+            {
+                $("#includedContent").load("navbar_write.html");
+            }
+        });
+
+
+
+
         callApi('accounts/users','get','',function (data) {
             console.log(data);
             var trHTML = '';
@@ -59,9 +78,20 @@
         });
 
 
-        $(function(){
-            $("#includedContent").load("navbar.html");
+//todo : problem here
+        $(document).ready(function(){
+            var tData=getQueryStringValue('data');
+            if(tData==1)
+            {
+                setTimeout(showToast('adas'), 20000);
+
+            }
+            if(tData==0)
+            {
+                setTimeout(showToast('adasasdsaasd'), 20000);
+            }
         });
+
 
     </script>
 

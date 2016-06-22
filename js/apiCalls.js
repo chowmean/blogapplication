@@ -10,11 +10,19 @@
 var baseUrl='http://54.191.251.207:8085/api/';
 var staticUrl='http://54.191.251.207:8085/';
 
+function showToast(data){
+    var toast=document.getElementById('toasted');
+    toast.innerHTML=data;
+    $(".toasted").fadeIn(1000);
+    $(".toasted").delay(1000);
+    $(".toasted").fadeOut(1000);
 
-$( "#submitBlog" ).click(function() {
- //   uploadImage(event);
-});
+}
 
+
+function getQueryStringValue (key) {
+    return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+}
 
 
 function callApi(url,method, data,callback)
@@ -104,13 +112,13 @@ function deleteUser(userId,operation)
     if(operation == 1)
     {
         callApi('accounts/deactivate/?user_id='+userId,'delete','',function (result) {
-            console.log(result);
+            window.location.href='users.html?data=0';
         });
     }
     else if(operation == 0)
     {
         callApi('accounts/activate/?user_id='+userId,'post','',function (result) {
-            console.log(result);
+            window.location.href='users.html?data=1';
         });
     }
 
