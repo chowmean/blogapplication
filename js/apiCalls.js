@@ -7,7 +7,8 @@
  */
 
 
-var baseUrl='http://192.168.9.129:8085/api/';
+var baseUrl='http://54.191.251.207:8085/api/';
+var staticUrl='http://54.191.251.207:8085/';
 
 
 $( "#submitBlog" ).click(function() {
@@ -64,10 +65,10 @@ function uploadImage(url,event,callback) {
 
 function saveBlog(event)
 {
-    user_id=1;
+    user_id=10;
     blog_data=document.getElementById('blogTextArea').value;
     blog_title=document.getElementById('title').value;
-    category_id = 2;
+    category_id = 4;
 
     data={
         "user_id":user_id,
@@ -113,4 +114,11 @@ function deleteUser(userId,operation)
         });
     }
 
+}
+
+
+function review(a)
+{
+    url = 'review.html?blogId=' + encodeURIComponent(a);
+    document.location.href = url;
 }

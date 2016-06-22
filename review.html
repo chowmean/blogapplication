@@ -20,10 +20,45 @@
 
 
 
-    callApi('blogs/22','get','',function (data) {
+    function getQueryStringValue (key) {
+        return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+    }
+
+    function publish(a)
+    {
+        callApi('/blogs/publish/'+a,'post','',function(result,textStatus,jqXHR){
+            if (textStatus=='success')
+            {
+                console.log(result);
+            }
+            else {
+                console.log('error!')
+            }
+        })
+    }
+
+    function reject(a)
+    {
+        callApi('/blogs/depublish/'+a,'post','',function(result,textStatus,jqXHR){
+            if (textStatus=='success')
+            {
+                console.log(result);
+            }
+            else {
+                console.log('error!')
+            }
+        })
+    }
+
+
+    callApi('blogs/'+getQueryStringValue("blogId"),'get','',function (data) {
         document.getElementById('title').innerHTML=data.blog_title;
         document.getElementById('category').innerHTML=data.category_name;
         document.getElementById('blogBody').innerHTML=data.blog_body;
+        document.getElementById('blogBody').innerHTML=data.blog_body;
+        document.getElementById('imgSrc').innerHTML='<img src="'+ staticUrl+data.image_path +'" class="blogImg"/>';
+        $('#publish').attr('onclick', 'publish('+data.blog_id+')');
+        $('#reject').attr('onclick', 'reject('+data.blog_id+')');
     });
 
 
@@ -44,12 +79,12 @@
 
 <div id="blog" class="col-md-offset-2 col-md-9 blog">
 
-<img src="img/1.jpg" class="blogImg"/>
+<div id="imgSrc"></div>
 <div class="title" id="title">Title</div>
 <div class="category" id="category">category</div>
 <div class="blogBody" id="blogBody">blog body</div>
-<a class="btn btn-primary pull-right">Publish</a>
-<a class="btn btn-danger">Reject</a>
+<a class="btn btn-primary pull-right" id="publish">Publish</a>
+<a class="btn btn-danger" id="reject">Reject</a>
 
 </div>
 

@@ -1,14 +1,39 @@
 <link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet">
+
+<!-- Optional theme -->
 <link rel="stylesheet" href="css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-<script src="js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-<script src="js/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
-<script   src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js">  </script>
 <link rel="stylesheet" href="css/cards.css">
+<script src="js/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="js/apiCalls.js"></script>
+
+<script   src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js">  </script>
+
 <script>
+
+
     $(function(){
         $("#includedContent").load("navbar_write.html");
+    });
+
+    callApi('blogs?user_id=10','get','',function (result) {
+        console.log(result);
+        var toADDTo=document.getElementById('blogsRow');
+        $.each(result, function (i, item) {
+            var t=document.createElement('div');
+            data= '<img src="'+staticUrl+result[i].image_path+'" width="100%"/>' +
+                    '<font size="4">'+result[i].blog_title+'</font><br>' +result[i].category_name + '<br>'+
+                    result[i].blog_body+'<br>' +
+                    result[i].username+'<br>'+
+                    '<a class="bttn pull-right" onclick="review('+result[i].blog_id+')">View</a>';
+            t.classList=['col-md-3 mCard'];
+            t.innerHTML=data;
+            toADDTo.appendChild(t);
+        });
     });
 </script>
 
@@ -18,29 +43,9 @@
 
 <div id="includedContent"></div>
 
-
-
 <div id="blogs" class="col-md-offset-3 col-md-9">
-    <div class="row">
-        <div class="col-md-3 mCard">
-            asdasjlkj<br>
-            <a class="bttn pull-right">Review</a>
-        </div>
+    <div class="row" id="blogsRow">
 
-
-        <div class="col-md-3 mCard">
-            asdasjlkj
-
-            <br>
-            <a class="bttn pull-right">Review</a>
-        </div>
-
-        <div class="col-md-3 mCard">
-            asdasjlkj
-
-            <br>
-            <a class="bttn pull-right">Review</a>
-        </div>
     </div>
 </div>
 
@@ -53,6 +58,5 @@
 h4.title {
     text-align: center;
 }
-
 
 </style>

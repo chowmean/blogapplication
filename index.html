@@ -14,10 +14,7 @@
 <script   src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js">  </script>
 
 <script>
-    function review(a)
-    {
-        console.log(a);
-    }
+
 
     $(function(){
         $("#includedContent").load("navbar.html");
@@ -28,7 +25,8 @@
         var toADDTo=document.getElementById('blogsRow');
         $.each(result, function (i, item) {
             var t=document.createElement('div');
-            data= '<font size="4">'+result[i].blog_title+'</font><br>' +result[i].category_name + '<br>'+
+            data= '<img src="'+staticUrl+result[i].image_path+'" width="100%"/>' +
+                    '<font size="4">'+result[i].blog_title+'</font><br>' +result[i].category_name + '<br>'+
                     result[i].blog_body+'<br>' +
                     result[i].username+'<br>'+
                     '<a class="bttn pull-right" onclick="review('+result[i].blog_id+')">Review</a>';
