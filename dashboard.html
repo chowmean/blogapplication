@@ -1,0 +1,153 @@
+<link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+<link rel="stylesheet" href="css/cards.css">
+<script src="js/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="js/apiCalls.js"></script>
+
+<script>
+    var userRole=window.localStorage.getItem('role');
+
+    $(function(){
+        if(userRole=='admin')
+        {
+            $("#includedContent").load("navbar.html");
+        }
+        else if(userRole=="user")
+        {
+            $("#includedContent").load("navbar_write.html");
+        }
+    });
+
+
+
+
+
+
+if (userRole==='admin')
+{
+    var blogurl="blogs";
+    callApi('accounts/users/'+getQueryStringValue("blogId"),'get','',function (data) {
+        var totalBlogs=data.length;
+        console.log(totalBlogs);
+        var as=$(data).filter(function (i,n){return n.active===1});
+        console.log(as.length);
+        console.log(totalBlogs - as.length);
+        document.getElementById('totalUser').innerHTML='Total Users: ' + totalBlogs;
+        document.getElementById('activeUser').innerHTML='Total Active: ' + as.length;
+        document.getElementById('unactiveUser').innerHTML='Users Restricted: ' + (totalBlogs-as.length);
+        $('#unactiveUser').removeClass('hidden');
+        $('#activeUser').removeClass('hidden');
+        $('#totalUser').removeClass('hidden');
+
+    });
+}
+
+else {
+    var blogurl="blogs?user_id=10";
+}
+
+
+    callApi('blogs/'+getQueryStringValue("blogId"),'get','',function (data) {
+        var totalBlogs=data.length;
+        console.log(totalBlogs);
+        var as=$(data).filter(function (i,n){return n.published===1});
+        console.log(as.length);
+        console.log(totalBlogs - as.length);
+        document.getElementById('blogCount').innerHTML='Total Blogs: ' + totalBlogs;
+        document.getElementById('blogPub').innerHTML='Total Published Blogs: ' + as.length;
+        document.getElementById('blogUnpub').innerHTML='Total Rejected Blogs: ' + (totalBlogs-as.length);
+
+    });
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+<div id="includedContent"></div>
+
+<div id="blogBody" class="col-md-offset-2 col-md-9 ">
+<a href="index.html"><div id="blogCount" class="col-md-3 blogCnt"></div>
+<div id="blogPub" class="col-md-3 blogCnt"></div>
+<div id="blogUnpub" class="col-md-3 blogCnt"></div></a>
+
+<a href="users.html">
+<div id="totalUser" class="col-md-3 blogCnt hidden" ></div>
+<div id="activeUser" class="col-md-3 blogCnt hidden" ></div>
+<div id="unactiveUser" class="col-md-3 blogCnt hidden" ></div></a>
+
+</div>
+
+
+<style>
+    h2 {
+        text-align: center;
+        margin: 30px 0;
+    }
+
+    h4.title {
+        text-align: center;
+    }
+
+    .title
+    {
+        text-align: center;
+        font-size:30px;
+        color:teal;
+
+
+    }
+
+    .category
+    {
+        text-align: center;
+        font-size:15px;
+        color:lightslategray;
+
+    }
+
+
+    .blogBody
+    {
+        background:#f8f8f8;
+        text-align: left;
+        font-size:17px;
+        color:lightslategray;
+        border-radius:3px;
+
+    }
+
+    .blogCnt
+    {
+        border-radius:3px;
+        background: #f1f1f1;
+        padding:40px;
+        margin:30px;
+    }
+
+    .blogCnt:hover
+    {
+        border-radius:3px;
+        background: #f9f9f9;
+        padding:40px;
+        margin:30px;
+    }
+
+
+
+</style>

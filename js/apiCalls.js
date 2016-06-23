@@ -10,12 +10,23 @@
 var baseUrl='http://54.191.251.207:8085/api/';
 var staticUrl='http://54.191.251.207:8085/';
 
+
+
+function logout()
+{
+    callApi('accounts/logout','post','',function(data, textStatus, jqXHR){
+        window.localStorage.removeItem('tokenData');
+        window.localStorage.removeItem('role');
+        window.location.href='login.html';
+    });
+}
+
 function showToast(data){
     var toast=document.getElementById('toasted');
     toast.innerHTML=data;
-    $(".toasted").fadeIn(1000);
-    $(".toasted").delay(1000);
-    $(".toasted").fadeOut(1000);
+    $(".toasted").fadeIn(200);
+    $(".toasted").delay(2000);
+    $(".toasted").fadeOut(300);
 
 }
 
@@ -34,7 +45,7 @@ function callApi(url,method, data,callback)
     $.when($.ajax({
         url:baseUrl+url,
         headers: {
-            //'token': window.localStorage.getItem('token'),
+            //'token': window.localStorage.getItem('tokenData'),
             'Content-Type':'application/json'
         },
         method: method,
