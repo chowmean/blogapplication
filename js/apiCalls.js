@@ -45,7 +45,7 @@ function callApi(url,method, data,callback)
     $.when($.ajax({
         url:baseUrl+url,
         headers: {
-            //'token': window.localStorage.getItem('tokenData'),
+            'token': window.localStorage.getItem('tokenData'),
             'Content-Type':'application/json'
         },
         method: method,
