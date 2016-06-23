@@ -69,6 +69,10 @@ function uploadImage(url,event,callback) {
     formData.append('blogImage', $('input[type=file]')[0].files[0]);
     $.when($.ajax({
         type: 'POST',
+        headers: {
+            'token': window.localStorage.getItem('tokenData'),
+            'Content-Type':'application/json'
+        },
         url: baseUrl + url,
         data: formData,
         cache: false,
