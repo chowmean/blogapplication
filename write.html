@@ -13,7 +13,11 @@
 
 
 <script>
-
+    var token=window.localStorage.getItem('tokenData');
+    if(token==null)
+    {
+        window.location.href='login.html';
+    }
     var userRole=window.localStorage.getItem('role');
     $(function(){
         if(userRole=='admin')
