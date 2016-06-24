@@ -71,10 +71,19 @@
         if(userRole=='admin') {
             $('#publish').attr('onclick', 'publish(' + data.blog_id + ')');
             $('#reject').attr('onclick', 'reject(' + data.blog_id + ')');
+
+            if(data.published==1)
+            {
+                $('#publish').addClass('disabled');
+            }
+            else {
+                $('#reject').addClass('disabled');
+            }
         }
         else {
             $('#publish').addClass('hidden');
             $('#reject').addClass('hidden');
+
 
         }
     });
