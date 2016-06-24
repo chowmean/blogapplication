@@ -150,6 +150,18 @@ function deleteUser(userId,operation,event)
 }
 
 
+function addCategory()
+{
+    var name=document.getElementById('category_name').value;
+    var details=document.getElementById('category_details').value;
+
+     callApi('blogs/categories','post',{"category_name":name,"category_details":details},function (result) {
+            window.location.href='addCategory.html';
+     });
+
+}
+
+
 function review(a)
 {
     url = 'review.html?blogId=' + encodeURIComponent(a);
