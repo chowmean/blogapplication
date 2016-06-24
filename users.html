@@ -1,24 +1,10 @@
-<!-- Latest compiled and minified CSS -->
 <script src="js/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
-
-
 <link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
-
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-<link href="css/bootstrap-table.css" rel="stylesheet">
-<!-- Latest compiled and minified JavaScript -->
 <script src="js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script src="js/apiCalls.js"></script>
 
-
-
-
 <div id="includedContent"></div>
-
 
 <div id="tableDiv" class="display col-md-offset-2 col-md-9 table-responsive">
 
@@ -36,9 +22,9 @@
     </table>
 
 
-
-    </body>
     <script>
+
+
         var token=window.localStorage.getItem('tokenData');
         if(token==null)
         {
@@ -73,28 +59,16 @@
                         '</td><td><a class="btn btn-primary"';
 
                 if(data[i].active==0){
-                        trHTML +='onclick="deleteUser('+data[i].user_id+','+data[i].active+')">Activate User</a></td></tr>';}
+                        trHTML +='onclick="deleteUser('+data[i].user_id+','+data[i].active+',event)">Activate User</a></td></tr>';}
                 else {
-                        trHTML +='onclick="deleteUser('+data[i].user_id+','+data[i].active+')">Restrict User</a></td></tr>';}
+                        trHTML +='onclick="deleteUser('+data[i].user_id+','+data[i].active+',event)">Restrict User</a></td></tr>';}
             });
             trHTML+='</tbody>';
             $('#location').append(trHTML);
         });
 
 
-//todo : problem here
-        $(document).ready(function(){
-            var tData=getQueryStringValue('data');
-            if(tData==1)
-            {
-                setTimeout(showToast('adas'), 20000);
 
-            }
-            if(tData==0)
-            {
-                setTimeout(showToast('adasasdsaasd'), 20000);
-            }
-        });
 
 
     </script>

@@ -36,8 +36,9 @@ function getQueryStringValue (key) {
 }
 
 
-function callApi(url,method, data,callback)
+function callApi(url,method, data, callback)
 {
+
     if(data=='')
     {
         data={"data":"empty"};
@@ -71,13 +72,13 @@ function uploadImage(url,event,callback) {
         type: 'POST',
         headers: {
             'token': window.localStorage.getItem('tokenData'),
-            'Content-Type':'application/json'
         },
         url: baseUrl + url,
         data: formData,
         cache: false,
         contentType: false,
-        processData: false
+        processData: false,
+        enctype:"multipart/form-data"
     })).then(
         function (data, textStatus, jqXHR) {
             callback(data,textStatus,jqXHR);
@@ -88,6 +89,7 @@ function uploadImage(url,event,callback) {
 
 function saveBlog(event)
 {
+    event.preventDefault()
     user_id=10;
     blog_data=document.getElementById('blogTextArea').value;
     blog_title=document.getElementById('title').value;
@@ -103,14 +105,18 @@ function saveBlog(event)
     callApi('blogs/','post', data ,function (result,textStatusR,jqXHRR) {
         blogId=result.blog_id;
         if(textStatusR=='success'){
+
+            showToast('Text Created. Uploading Image.');
             uploadImage("blogs/images?blog_id="+blogId , event , function(data,textStatus,jqXHR){
                 if(textStatus=='success')
                 {
                     console.log('blog created Successfully');
+                    showToast('Blog created Successfully.');
                 }
                 else
                 {
                     console.log('Error! Problem in uplaoding image');
+                    showToast('Image upload failed');
                 }
             });
         }
@@ -122,18 +128,21 @@ function saveBlog(event)
 
 
 
-function deleteUser(userId,operation)
+function deleteUser(userId,operation,event)
 {
+    event.preventDefault();
     if(operation == 1)
     {
-        callApi('accounts/deactivate/?user_id='+userId,'delete','',function (result) {
-            window.location.href='users.html?data=0';
+        callApi('accounts/deactivate/'+userId,'delete','',function (result) {
+                console.log('done');
+            window.location.href='users.html';
         });
     }
     else if(operation == 0)
     {
-        callApi('accounts/activate/?user_id='+userId,'post','',function (result) {
-            window.location.href='users.html?data=1';
+        callApi('accounts/activate/'+userId,'post','',function (result) {
+            console.log('done');
+            window.location.href='users.html';
         });
     }
 
