@@ -93,7 +93,8 @@ function saveBlog(event)
     user_id=10;
     blog_data=document.getElementById('blogTextArea').value;
     blog_title=document.getElementById('title').value;
-    category_id = 4;
+    category_id=document.getElementById('category').value;
+    //category_id = 4;
 
     data={
         "user_id":user_id,

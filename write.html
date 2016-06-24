@@ -32,6 +32,19 @@
     });
 
 
+
+    callApi('blogs/categories','get','',function (result) {
+        console.log(result);
+        var toADDTo=document.getElementById('category');
+        $.each(result, function (i, item) {
+            var t=document.createElement('option');
+            data= result[i].category_name;
+            t.value=result[i].category_id;
+            t.innerHTML = data;
+            toADDTo.appendChild(t);
+        });
+    });
+
 </script>
 
 
@@ -53,11 +66,7 @@
         <fieldset class="form-group">
             <label for="category">Category</label>
             <select class="form-control" id="category">
-                <option>cat 1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+
             </select>
             <small class="text-muted">Select Blog Category</small>
 
