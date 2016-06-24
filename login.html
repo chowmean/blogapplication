@@ -31,7 +31,7 @@
     <input type="password" name="password" id="password" class="input" required>
          <br> <br><button onclick="login(event)" class="btn btn-primary">Get In</button>
          <br><br>
-         
+
 
 
      </center></form>
@@ -81,6 +81,7 @@
             if(textStatusR=='success'){
                 window.localStorage.tokenData=result.token;
                 window.localStorage.role=result.data[0].role;
+                window.localStorage.user_id=result.data[0].user_id;
                 window.location.href='index.html';
             }
             else {

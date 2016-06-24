@@ -11,6 +11,8 @@
 
 <script>
 
+
+var callUrl='blogs';
 var token=window.localStorage.getItem('tokenData');
 if(token==null)
 {
@@ -21,6 +23,7 @@ if(token==null)
     $(function(){
         if(userRole=='admin')
         {
+
             $("#includedContent").load("navbar.html");
         }
         else if(userRole=="user")
@@ -28,11 +31,15 @@ if(token==null)
             $("#includedContent").load("navbar_write.html");
         }
 
-
+    callUrl='blogs';
     });
 
-
-    callApi('blogs','get','',function (result) {
+if(getQueryStringValue('user')==1)
+{
+    callUrl="blogs?user_id="+ window.localStorage.user_id;
+    console.log(callUrl);
+}
+    callApi(callUrl,'get','',function (result) {
         console.log(result);
         var toADDTo=document.getElementById('blogsRow');
         $.each(result, function (i, item) {
